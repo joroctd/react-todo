@@ -1,10 +1,8 @@
-function TodoListItem ({title, id}) {
+function TodoListItem ({title}) {
     return (
-    <li
-        key={id}
-    >
-        {title}
-    </li>
+        <li>
+            {title}
+        </li>
     );
 }
 
