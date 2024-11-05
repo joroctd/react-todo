@@ -1,30 +1,27 @@
-// import { useState } from 'react'
+import { useState } from 'react'
 import './App.css'
-
-const todoList = [];
-[
-  'Master React', 
-  'Master Node', 
-  'Clear out email'
-].forEach((title, id) => { todoList.push({id, title}) });
+import TodoList from './TodoList.jsx';
+import AddTodoForm from './AddTodoForm.jsx';
 
 function App() {
-  // const [count, setCount] = useState(0)
+  const [todoList, setTodoList] = useState([]);
+
+  const addTodo = newTodo => {
+    let id;
+    try {
+      id = crypto.randomUUID();
+    } catch (e) {
+      id = Date.now();
+    }
+    setTodoList([...todoList, { title: newTodo, id }]);
+  };
 
   return (
     <>
       <h1>Todo List</h1>
-      <ul className='todo-list'>
-        {
-          todoList.map(({title, id}) => (
-            <li
-              key={id}
-            >
-              {title}
-            </li>
-          ))
-        }
-      </ul>
+      <AddTodoForm onAddTodo={addTodo} />
+      <hr />
+      <TodoList todoList={todoList} />
     </>
   )
 }

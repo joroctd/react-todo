@@ -11,6 +11,12 @@ ul.todo-list {
   margin: 0;
 }
 
+form.add-todo-form {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+}
+
 /* .logo {
   height: 6em;
   padding: 1.5em;
