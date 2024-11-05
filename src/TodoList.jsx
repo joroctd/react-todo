@@ -1,3 +1,5 @@
+import TodoListItem from './TodoListItem.jsx';
+
 const todoList = [];
 [
   'Master React', 
@@ -9,13 +11,7 @@ function TodoList() {
     return (
       <ul className='todo-list'>
         {
-          todoList.map(({title, id}) => (
-            <li
-              key={id}
-            >
-              {title}
-            </li>
-          ))
+          todoList.map(props => <TodoListItem {...props} />)
         }
       </ul>
   );
