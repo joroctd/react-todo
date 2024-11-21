@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import './App.css'
-import TodoList from './TodoList.jsx';
-import AddTodoForm from './AddTodoForm.jsx';
+import TodoList from './TodoList';
+import AddTodoForm from './AddTodoForm';
 
 function useSemiPersistentState() {
   const TODO_LIST_KEY = 'savedTodoList';
