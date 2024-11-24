@@ -6,6 +6,7 @@ export default async ({
 	options = { method: 'GET' },
 	dataCallback = () => {},
 	errorCallback = () => {},
+	body,
 	id
 }) => {
 	const expandedOptions = {
@@ -15,8 +16,8 @@ export default async ({
 			Authorization: `Bearer ${import.meta.env.VITE_AIRTABLE_API_TOKEN}`
 		}
 	};
-	if (options.body) {
-		expandedOptions.body = JSON.stringify({ fields: options.body });
+	if (body) {
+		expandedOptions.body = JSON.stringify({ fields: body });
 	}
 	const requestUrl = id ? `${baseUrl}/${id}` : baseUrl;
 

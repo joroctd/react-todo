@@ -82,16 +82,19 @@ function App() {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
-			},
-			body: {
-				title: newTodo
 			}
 		};
 		const dataCallback = data => {
 			const { id } = data;
 			dispatchTodoList({ type: 'ADD', payload: { title: newTodo, id } });
 		};
-		requestWrapper({ options, dataCallback });
+		requestWrapper({
+			options,
+			dataCallback,
+			body: {
+				title: newTodo
+			}
+		});
 	};
 
 	const removeTodo = id => {
