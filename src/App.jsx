@@ -49,12 +49,19 @@ function App() {
 	return (
 		<>
 			<h1>Todo List</h1>
-			<AddTodoForm onAddTodo={addTodo} />
-			<hr />
-			<TodoList
-				todoList={todoList}
-				onRemoveTodo={removeTodo}
+			<AddTodoForm
+				onAddTodo={addTodo}
+				isLoading={isLoading}
 			/>
+			<hr />
+			{isLoading ? (
+				<p>Loading...</p>
+			) : (
+				<TodoList
+					todoList={todoList}
+					onRemoveTodo={removeTodo}
+				/>
+			)}
 		</>
 	);
 }
