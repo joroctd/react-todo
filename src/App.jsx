@@ -22,7 +22,8 @@ const todoListReducer = (state, action) => {
 			return {
 				...state,
 				isLoading: false,
-				isError: true
+				isError: true,
+				errorMessage: action.payload.message
 			};
 		case 'ADD':
 			return {
@@ -40,40 +41,52 @@ const todoListReducer = (state, action) => {
 };
 
 function App() {
-	const TODO_LIST_KEY = 'savedTodoList';
-	const localTodoList = JSON.parse(localStorage.getItem(TODO_LIST_KEY));
+	const url = `https://api.airtable.com/v0/${
+		import.meta.env.VITE_AIRTABLE_BASE_ID
+	}/${import.meta.env.VITE_TABLE_NAME}`;
 	const [todoList, dispatchTodoList] = useReducer(todoListReducer, {
-		data: localTodoList,
+		data: [],
 		isLoading: false,
 		isError: false
 	});
 
-	useEffect(() => {
-		dispatchTodoList({ type: 'FETCH_INIT' });
-
-		const fetchTodos = async () => {
-			const { data } = await new Promise((resolve, reject) => {
-				setTimeout(() => {
-					resolve({
-						data: {
-							todos: todoList.data
-						}
-					});
-				}, 2000);
-			});
-
-			dispatchTodoList({ type: 'FETCH_SUCCESS', payload: data.todos });
+	const fetchData = async () => {
+		const options = {
+			method: 'GET',
+			headers: {
+				Authorization: `Bearer ${import.meta.env.VITE_AIRTABLE_API_TOKEN}`
+			}
 		};
 
-		fetchTodos();
-	}, []);
+		try {
+			const response = await fetch(url, options);
+			if (!response.ok) {
+				throw new Error(`Error: ${response.status}`);
+			}
+
+			const data = await response.json();
+			const todos = data.records.map(({ id, fields: { title } }) => ({
+				id,
+				title
+			}));
+			dispatchTodoList({ type: 'FETCH_SUCCESS', payload: todos });
+		} catch (err) {
+			console.error(err.message);
+			dispatchTodoList({
+				type: 'FETCH_FAILURE',
+				payload: {
+					message: err.message
+				}
+			});
+		}
+	};
 
 	useEffect(() => {
-		if (!todoList.isLoading) {
-			localStorage.setItem(TODO_LIST_KEY, JSON.stringify(todoList.data));
-		}
-	}, [todoList.data]);
+		dispatchTodoList({ type: 'FETCH_INIT' });
+		fetchData();
+	}, []);
 
+	// TODO: update add and remove methods to communicate with airtable API
 	const addTodo = newTodo => {
 		let id;
 		try {
