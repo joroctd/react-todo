@@ -1,17 +1,10 @@
 import TodoListItem from './TodoListItem.jsx';
 
-const todoList = [];
-[
-  'Master React', 
-  'Master Node', 
-  'Clear out email'
-].forEach((title, id) => { todoList.push({id, title}) });
-
-function TodoList() {
+function TodoList({ todoList }) {
     return (
       <ul className='todo-list'>
         {
-          todoList.map(props => <TodoListItem {...props} />)
+          todoList.map(({id, title}) => <TodoListItem key={id} title={title} />)
         }
       </ul>
   );
