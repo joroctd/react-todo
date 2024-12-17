@@ -2,6 +2,7 @@ import { useEffect, useReducer } from 'react';
 import './App.css';
 import TodoList from './TodoList';
 import AddTodoForm from './AddTodoForm';
+import requestWrapper from './requestWrapper';
 
 const todoListReducer = (state, action) => {
 	switch (action.type) {
@@ -22,7 +23,8 @@ const todoListReducer = (state, action) => {
 			return {
 				...state,
 				isLoading: false,
-				isError: true
+				isError: true,
+				errorMessage: action.payload.message
 			};
 		case 'ADD':
 			return {
@@ -40,53 +42,70 @@ const todoListReducer = (state, action) => {
 };
 
 function App() {
-	const TODO_LIST_KEY = 'savedTodoList';
-	const localTodoList = JSON.parse(localStorage.getItem(TODO_LIST_KEY));
 	const [todoList, dispatchTodoList] = useReducer(todoListReducer, {
-		data: localTodoList,
+		data: [],
 		isLoading: false,
 		isError: false
 	});
 
+	const fetchData = async () => {
+		const options = { method: 'GET' };
+		const dataCallback = data => {
+			const todos = data.records.map(({ id, fields: { title } }) => ({
+				id,
+				title
+			}));
+			dispatchTodoList({ type: 'FETCH_SUCCESS', payload: todos });
+		};
+		const errorCallback = message => {
+			dispatchTodoList({
+				type: 'FETCH_FAILURE',
+				payload: {
+					message
+				}
+			});
+		};
+		requestWrapper({
+			options,
+			dataCallback,
+			errorCallback
+		});
+	};
+
 	useEffect(() => {
 		dispatchTodoList({ type: 'FETCH_INIT' });
-
-		const fetchTodos = async () => {
-			const { data } = await new Promise((resolve, reject) => {
-				setTimeout(() => {
-					resolve({
-						data: {
-							todos: todoList.data
-						}
-					});
-				}, 2000);
-			});
-
-			dispatchTodoList({ type: 'FETCH_SUCCESS', payload: data.todos });
-		};
-
-		fetchTodos();
+		fetchData();
 	}, []);
 
-	useEffect(() => {
-		if (!todoList.isLoading) {
-			localStorage.setItem(TODO_LIST_KEY, JSON.stringify(todoList.data));
-		}
-	}, [todoList.data]);
-
-	const addTodo = newTodo => {
-		let id;
-		try {
-			id = crypto.randomUUID();
-		} catch (e) {
-			id = Date.now();
-		}
-
-		dispatchTodoList({ type: 'ADD', payload: { title: newTodo, id } });
+	const addTodo = async newTodo => {
+		const options = {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		};
+		const dataCallback = data => {
+			const { id } = data;
+			dispatchTodoList({ type: 'ADD', payload: { title: newTodo, id } });
+		};
+		requestWrapper({
+			options,
+			dataCallback,
+			body: {
+				title: newTodo
+			}
+		});
 	};
 
 	const removeTodo = id => {
-		dispatchTodoList({ type: 'REMOVE', payload: { id } });
+		const options = {
+			method: 'DELETE'
+		};
+		const dataCallback = data => {
+			const { id } = data;
+			dispatchTodoList({ type: 'REMOVE', payload: { id } });
+		};
+		requestWrapper({ options, dataCallback, id });
 	};
 
 	return (
