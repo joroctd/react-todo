@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import InputWithLabel from './InputWithLabel';
 
-function AddTodoForm({ onAddTodo }) {
+function AddTodoForm({ onAddTodo, isLoading }) {
 	const [todoTitle, setTodoTitle] = useState('');
 
 	const handleTitleChange = event => {
@@ -25,7 +25,7 @@ function AddTodoForm({ onAddTodo }) {
 				inputValue={todoTitle}>
 				Title
 			</InputWithLabel>
-			<button>Add</button>
+			{isLoading ? <button disabled>Loading...</button> : <button>Add</button>}
 		</form>
 	);
 }
