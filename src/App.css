@@ -10,6 +10,15 @@ nav {
   justify-content: space-evenly;
 }
 
+h1 {
+  font-size: 3.4em;
+  font-weight: 400;
+  color: goldenrod;
+  background: linear-gradient(75deg, indigo, purple);
+  border-style: groove;
+  border-radius: 45%;
+}
+
 /* .logo {
   height: 6em;
   padding: 1.5em;
