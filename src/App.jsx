@@ -1,9 +1,9 @@
 import { useEffect, useReducer } from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
-import TodoList from './TodoList';
-import AddTodoForm from './AddTodoForm';
-import requestWrapper from './requestWrapper';
+import TodoList from './component/TodoList';
+import AddTodoForm from './component/AddTodoForm';
+import requestWrapper from './util/requestWrapper';
 
 const todoListReducer = (state, action) => {
 	switch (action.type) {
@@ -141,7 +141,7 @@ function App() {
 				/>
 				<Route
 					path='/new'
-					element={<h1>New Todo List</h1>}
+					element={<h1>New (empty) Todo List</h1>}
 				/>
 			</Routes>
 		</BrowserRouter>

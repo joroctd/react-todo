@@ -10,19 +10,6 @@ nav {
   justify-content: space-evenly;
 }
 
-ul.todo-list {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-form.add-todo-form, ul.todo-list > li {
-  display: flex;
-  gap: 10px;
-  align-items: baseline;
-  justify-content: center;
-}
-
 /* .logo {
   height: 6em;
   padding: 1.5em;
