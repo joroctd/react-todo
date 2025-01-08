@@ -5,19 +5,25 @@
   text-align: center;
 }
 
+nav {
+  display: flex;
+  justify-content: space-evenly;
+}
+
 ul.todo-list {
   list-style-type: none;
   padding: 0;
   margin: 0;
 }
 
-form.add-todo-form, ul.todo-list > li {
+form.add-todo-form,
+ul.todo-list>li {
   display: flex;
   gap: 10px;
   align-items: baseline;
 }
 
-ul.todo-list > li {
+ul.todo-list>li {
   justify-content: center;
 }
 
@@ -56,4 +62,3 @@ ul.todo-list > li {
 .read-the-docs {
   color: #888;
 } */
- 

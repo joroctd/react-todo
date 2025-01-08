@@ -1,3 +1,4 @@
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import './App.css';
 import TodoList from './TodoList.jsx';
@@ -77,11 +78,12 @@ function App() {
 		} catch (error) {}
 	};
 
+	// TODO: make work with Airtable
 	const removeTodo = id => {
 		setTodoList(todoList.filter(todo => todo.id !== id));
 	};
 
-	return (
+	const Home = () => (
 		<>
 			<h1>Todo List</h1>
 			<AddTodoForm
@@ -98,6 +100,25 @@ function App() {
 				/>
 			)}
 		</>
+	);
+
+	return (
+		<BrowserRouter>
+			<nav>
+				<Link to='/'>Home</Link>
+				<Link to='/new'>New</Link>
+			</nav>
+			<Routes>
+				<Route
+					path='/'
+					element={<Home />}
+				/>
+				<Route
+					path='/new'
+					element={<h1>New List</h1>}
+				/>
+			</Routes>
+		</BrowserRouter>
 	);
 }
 
