@@ -5,8 +5,6 @@ import TodoList from './TodoList.jsx';
 import AddTodoForm from './AddTodoForm.jsx';
 
 function App() {
-	const todoListKey = 'savedTodoList';
-	const localTodoList = JSON.parse(localStorage.getItem(todoListKey));
 	const [todoList, setTodoList] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 
@@ -45,12 +43,6 @@ function App() {
 	useEffect(() => {
 		fetchData();
 	}, []);
-
-	// useEffect(() => {
-	// 	if (!isLoading) {
-	// 		localStorage.setItem(todoListKey, JSON.stringify(todoList));
-	// 	}
-	// }, [todoList]);
 
 	const addTodo = async newTodo => {
 		const options = {
