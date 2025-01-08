@@ -37,7 +37,9 @@ function App() {
 
 			setTodoList(todos);
 			setIsLoading(false);
-		} catch (error) {}
+		} catch (error) {
+			console.error(error.message);
+		}
 	};
 
 	useEffect(() => {
@@ -75,12 +77,32 @@ function App() {
 			const id = data.id;
 
 			setTodoList([...todoList, { title: newTodo, id }]);
-		} catch (error) {}
+		} catch (error) {
+			console.error(error.message);
+		}
 	};
 
-	// TODO: make work with Airtable
-	const removeTodo = id => {
-		setTodoList(todoList.filter(todo => todo.id !== id));
+	const removeTodo = async id => {
+		const options = {
+			method: 'DELETE',
+			headers: {
+				Authorization: `Bearer ${import.meta.env.VITE_AIRTABLE_API_TOKEN}`
+			}
+		};
+		const url = `https://api.airtable.com/v0/${
+			import.meta.env.VITE_AIRTABLE_BASE_ID
+		}/${import.meta.env.VITE_TABLE_NAME}/${id}`;
+
+		try {
+			const response = await fetch(url, options);
+			if (!response.ok) {
+				throw new Error(`Error: ${response.status}`);
+			}
+
+			setTodoList(todoList.filter(todo => todo.id !== id));
+		} catch (error) {
+			console.error(error.message);
+		}
 	};
 
 	const Home = () => (
