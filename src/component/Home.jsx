@@ -48,7 +48,6 @@ function Home() {
 	});
 
 	const fetchData = async () => {
-		const options = { method: 'GET' };
 		const dataCallback = data => {
 			const todos = data.records.map(({ id, fields: { title } }) => ({
 				id,
@@ -65,7 +64,6 @@ function Home() {
 			});
 		};
 		requestWrapper({
-			options,
 			dataCallback,
 			errorCallback
 		});
