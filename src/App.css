@@ -5,6 +5,11 @@
   text-align: center;
 }
 
+nav {
+  display: flex;
+  justify-content: space-evenly;
+}
+
 ul.todo-list {
   list-style-type: none;
   padding: 0;

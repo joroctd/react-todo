@@ -1,4 +1,5 @@
 import { useEffect, useReducer } from 'react';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
 import TodoList from './TodoList';
 import AddTodoForm from './AddTodoForm';
@@ -108,7 +109,7 @@ function App() {
 		requestWrapper({ options, dataCallback, id });
 	};
 
-	return (
+	const Home = () => (
 		<>
 			<h1>Todo List</h1>
 			<AddTodoForm
@@ -125,6 +126,25 @@ function App() {
 				/>
 			)}
 		</>
+	);
+
+	return (
+		<BrowserRouter>
+			<nav>
+				<Link to='/'>Home</Link>
+				<Link to='/new'>New</Link>
+			</nav>
+			<Routes>
+				<Route
+					path='/'
+					element={<Home />}
+				/>
+				<Route
+					path='/new'
+					element={<h1>New Todo List</h1>}
+				/>
+			</Routes>
+		</BrowserRouter>
 	);
 }
 
