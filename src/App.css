@@ -18,6 +18,20 @@ nav {
   font-size: 2em;
 }
 
+nav a {
+  display: flex;
+  flex-direction: row;
+  padding: .1em;
+  border: double;
+  justify-content: space-evenly;
+}
+
+nav a img {
+  max-width: 50px;
+  margin-right: 5px;
+  display: flex;
+}
+
 h1 {
   font-size: 3.4em;
   font-weight: 400;
@@ -32,6 +46,12 @@ h1 {
   h1 {
     font-size: 3em;
     padding: .7rem;
+  }
+}
+
+@media only screen and (max-width: 600px) and (min-width: 400px) {
+  #root {
+    width: 400px;
   }
 }
 

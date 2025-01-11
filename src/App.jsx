@@ -1,13 +1,24 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
+import homeImg from './assets/images/home.png';
+import newImg from './assets/images/new.png';
 import Home from './component/Home';
 
 function App() {
 	return (
 		<BrowserRouter>
 			<nav>
-				<Link to='/'>Home</Link>
-				<Link to='/new'>New</Link>
+				<Link to='/'>
+					<img
+						src={homeImg}
+						alt=''
+					/>
+					Home
+				</Link>
+				<Link to='/new'>
+					<img src={newImg} />
+					New
+				</Link>
 			</nav>
 			<Routes>
 				<Route
