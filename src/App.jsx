@@ -16,7 +16,7 @@ function App() {
 				/>
 				<Route
 					path='/new'
-					element={<h1>---New List---</h1>}
+					element={<h1>New List</h1>}
 				/>
 			</Routes>
 		</BrowserRouter>

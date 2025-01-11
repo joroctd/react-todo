@@ -10,6 +10,7 @@
   text-align: center;
 }
 
+/* Might prefer to lock nav. in place. Not going to worry about that for this project. */
 nav {
   display: flex;
   justify-content: space-evenly;
@@ -24,6 +25,14 @@ h1 {
   background: linear-gradient(75deg, indigo, purple);
   border-style: groove;
   border-radius: 45%;
+  padding: 1rem;
+}
+
+@media only screen and (max-width: 600px) {
+  h1 {
+    font-size: 3em;
+    padding: .7rem;
+  }
 }
 
 /* .logo {
