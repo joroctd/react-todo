@@ -7,29 +7,40 @@ import Home from './component/Home';
 function App() {
 	return (
 		<BrowserRouter>
-			<nav>
-				<Link to='/'>
-					<img
-						src={homeImg}
-						alt=''
+			<div className='app'>
+				<nav>
+					<Link to='/'>
+						<img
+							src={homeImg}
+							alt=''
+						/>
+						Home
+					</Link>
+					<Link to='/new'>
+						<img src={newImg} />
+						New
+					</Link>
+				</nav>
+				<Routes>
+					<Route
+						path='/'
+						element={<Home />}
 					/>
-					Home
-				</Link>
-				<Link to='/new'>
-					<img src={newImg} />
-					New
-				</Link>
-			</nav>
-			<Routes>
-				<Route
-					path='/'
-					element={<Home />}
-				/>
-				<Route
-					path='/new'
-					element={<h1>New List</h1>}
-				/>
-			</Routes>
+					<Route
+						path='/new'
+						element={<h1>New List</h1>}
+					/>
+				</Routes>
+			</div>
+			<footer>
+				<hr />
+				<p>Navigation icons:</p>
+				<a
+					href='https://www.flaticon.com/free-icons/user'
+					title='user icons'>
+					User icons created by venus design - Flaticon
+				</a>
+			</footer>
 		</BrowserRouter>
 	);
 }

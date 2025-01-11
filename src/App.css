@@ -10,6 +10,10 @@
   text-align: center;
 }
 
+.app {
+  min-height: 80vh;
+}
+
 /* Might prefer to lock nav. in place. Not going to worry about that for this project. */
 nav {
   display: flex;
@@ -40,6 +44,10 @@ h1 {
   border-style: groove;
   border-radius: 45%;
   padding: 1rem;
+}
+
+footer {
+  margin-top: 2em;
 }
 
 @media only screen and (max-width: 600px) {
