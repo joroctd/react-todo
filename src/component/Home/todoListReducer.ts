@@ -1,4 +1,4 @@
-import { State, Action } from '../types/TodoListReducer';
+import { State, Action } from '../propTypes/TodoListReducer';
 
 export const todoListReducer = (state: State, action: Action) => {
 	switch (action.type) {

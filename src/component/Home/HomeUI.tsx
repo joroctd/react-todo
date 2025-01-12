@@ -1,8 +1,8 @@
 import TodoList from '../TodoList/TodoList';
 import AddTodoForm from '../AddTodoForm/AddTodoForm';
-import { State } from '../types/TodoListReducer';
-import { OnAddTodo } from '../types/OnAddTodo';
-import { OnRemoveTodo } from '../types/OnRemoveTodo';
+import { State } from '../propTypes/TodoListReducer';
+import { OnAddTodo } from '../propTypes/OnAddTodo';
+import { OnRemoveTodo } from '../propTypes/OnRemoveTodo';
 
 interface HomeUIProps extends OnAddTodo, OnRemoveTodo {
 	todoList: State;
