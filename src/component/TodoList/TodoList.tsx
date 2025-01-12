@@ -1,5 +1,5 @@
 import TodoListItem from '../TodoListItem/TodoListItem';
-import style from './TodoListItem.module.css';
+import style from './TodoList.module.css';
 
 interface TodoListProps {
 	todoList: any[];
