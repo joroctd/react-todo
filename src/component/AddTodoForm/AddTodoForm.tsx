@@ -10,12 +10,12 @@ interface AddTodoFormProps extends OnAddTodo {
 function AddTodoForm({ onAddTodo, isLoading }: AddTodoFormProps) {
 	const [todoTitle, setTodoTitle] = useState('');
 
-	const handleTitleChange = (event: { target: { value: string } }) => {
+	const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const newTodoTitle = event.target.value;
 		setTodoTitle(newTodoTitle);
 	};
 
-	const handleAddTodo = (event: { preventDefault: () => void }) => {
+	const handleAddTodo = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		if (todoTitle !== '') {
 			onAddTodo(todoTitle);

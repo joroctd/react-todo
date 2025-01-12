@@ -1,12 +1,12 @@
 import { useRef, useEffect } from 'react';
 import style from './InputWithLabel.module.css';
+import { OnChange } from '../propTypes/OnChange';
 
-interface InputWithLabelProps {
+interface InputWithLabelProps extends OnChange {
 	id: string;
 	name?: string;
 	value: string;
-	onChange: (event: object) => void;
-	children: any;
+	children: React.ReactNode;
 }
 
 function InputWithLabel({
