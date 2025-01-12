@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from 'react';
+import { useEffect, useReducer, useRef } from 'react';
 import TodoList from './TodoList';
 import AddTodoForm from './AddTodoForm';
 import requestWrapper from '../util/requestWrapper';
@@ -41,6 +41,7 @@ const todoListReducer = (state, action) => {
 };
 
 function Home() {
+	const isMounted = useRef(false);
 	const [todoList, dispatchTodoList] = useReducer(todoListReducer, {
 		data: [],
 		isLoading: false,
@@ -70,6 +71,11 @@ function Home() {
 	};
 
 	useEffect(() => {
+		if (!isMounted.current) {
+			isMounted.current = true;
+			return;
+		}
+
 		dispatchTodoList({ type: 'FETCH_INIT' });
 		fetchData();
 	}, []);
