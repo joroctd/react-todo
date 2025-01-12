@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import style from './AddTodoForm.module.css';
-import InputWithLabel from './InputWithLabel';
+import InputWithLabel from '../InputWithLabel/InputWithLabel';
 
 interface AddTodoFormProps {
 	onAddTodo: (todoTitle: string) => void;
