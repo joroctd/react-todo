@@ -1,8 +1,22 @@
 import { useRef, useEffect } from 'react';
 import style from './InputWithLabel.module.css';
 
-function InputWithLabel({ id, name = id, value, onChange, children }) {
-	const inputRef = useRef();
+interface InputWithLabelProps {
+	id: string;
+	name?: string;
+	value: string;
+	onChange: (event: object) => void;
+	children: any;
+}
+
+function InputWithLabel({
+	id,
+	name = id,
+	value,
+	onChange,
+	children
+}: InputWithLabelProps) {
+	const inputRef = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
 		if (inputRef.current) inputRef.current.focus();

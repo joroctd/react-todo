@@ -11,7 +11,7 @@ const todoListReducer = (
 	},
 	action: {
 		type: string;
-		payload?: { message?: string; id?: string; title?: string };
+		payload?: { data?: any[]; message?: string; id?: string; title?: string };
 	}
 ) => {
 	switch (action.type) {
@@ -26,7 +26,7 @@ const todoListReducer = (
 				...state,
 				isLoading: false,
 				isError: false,
-				data: action.payload
+				data: action.payload.data
 			};
 		case 'FETCH_FAILURE':
 			return {
@@ -59,14 +59,16 @@ function Home() {
 	});
 
 	const fetchData = async () => {
-		const dataCallback = data => {
+		const dataCallback = (data: {
+			records: { id: string; fields: { title: string } }[];
+		}) => {
 			const todos = data.records.map(({ id, fields: { title } }) => ({
 				id,
 				title
 			}));
-			dispatchTodoList({ type: 'FETCH_SUCCESS', payload: todos });
+			dispatchTodoList({ type: 'FETCH_SUCCESS', payload: { data: todos } });
 		};
-		const errorCallback = message => {
+		const errorCallback = (message: string) => {
 			dispatchTodoList({
 				type: 'FETCH_FAILURE',
 				payload: {
@@ -90,14 +92,14 @@ function Home() {
 		fetchData();
 	}, []);
 
-	const addTodo = async newTodo => {
+	const addTodo = async (newTodo: string) => {
 		const options = {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			}
 		};
-		const dataCallback = data => {
+		const dataCallback = (data: { id: string }) => {
 			const { id } = data;
 			dispatchTodoList({ type: 'ADD', payload: { title: newTodo, id } });
 		};
@@ -110,11 +112,11 @@ function Home() {
 		});
 	};
 
-	const removeTodo = id => {
+	const removeTodo = (id: string) => {
 		const options = {
 			method: 'DELETE'
 		};
-		const dataCallback = data => {
+		const dataCallback = (data: { id: string }) => {
 			const { id } = data;
 			dispatchTodoList({ type: 'REMOVE', payload: { id } });
 		};
