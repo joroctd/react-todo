@@ -1,0 +1,7 @@
+{
+    "compilerOptions": {
+        "jsx": "preserve",
+        "lib": ["ES2020"]
+    },
+    "include": ["src"]
+}

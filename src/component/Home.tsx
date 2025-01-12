@@ -3,7 +3,17 @@ import TodoList from './TodoList';
 import AddTodoForm from './AddTodoForm';
 import requestWrapper from '../util/requestWrapper';
 
-const todoListReducer = (state, action) => {
+const todoListReducer = (
+	state: {
+		data: any[];
+		isLoading?: boolean;
+		isError?: boolean;
+	},
+	action: {
+		type: string;
+		payload?: { message?: string; id?: string; title?: string };
+	}
+) => {
 	switch (action.type) {
 		case 'FETCH_INIT':
 			return {
