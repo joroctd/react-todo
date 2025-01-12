@@ -1,23 +1,23 @@
 import TodoList from '../TodoList/TodoList';
 import AddTodoForm from '../AddTodoForm/AddTodoForm';
+import { State } from '../types/TodoListReducer';
+import { OnAddTodo } from '../types/OnAddTodo';
+import { OnRemoveTodo } from '../types/OnRemoveTodo';
 
-interface HomeUIProps {
-	todoList: {
-		data: any[];
-		isLoading?: boolean;
-		isError?: boolean;
-		errorMessage?: string;
-	};
-	addTodo: (todo: string) => void;
-	removeTodo: (id: string) => void;
+interface HomeUIProps extends OnAddTodo, OnRemoveTodo {
+	todoList: State;
 }
 
-export default function HomeUI({ todoList, addTodo, removeTodo }: HomeUIProps) {
+export default function HomeUI({
+	todoList,
+	onAddTodo,
+	onRemoveTodo
+}: HomeUIProps) {
 	return (
 		<>
 			<h1>Todo List</h1>
 			<AddTodoForm
-				onAddTodo={addTodo}
+				onAddTodo={onAddTodo}
 				isLoading={todoList.isLoading}
 			/>
 			<hr />
@@ -26,7 +26,7 @@ export default function HomeUI({ todoList, addTodo, removeTodo }: HomeUIProps) {
 			) : (
 				<TodoList
 					todoList={todoList.data}
-					onRemoveTodo={removeTodo}
+					onRemoveTodo={onRemoveTodo}
 				/>
 			)}
 		</>

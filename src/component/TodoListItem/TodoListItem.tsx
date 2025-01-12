@@ -1,10 +1,8 @@
 import style from './TodoListItem.module.css';
+import { Todo } from '../types/Todo';
+import { OnRemoveTodo } from '../types/OnRemoveTodo';
 
-interface TodoListItemProps {
-	title: string;
-	id: string;
-	onRemoveTodo: (id: string) => void;
-}
+interface TodoListItemProps extends Todo, OnRemoveTodo {}
 
 function TodoListItem({ title, id, onRemoveTodo }: TodoListItemProps) {
 	return (

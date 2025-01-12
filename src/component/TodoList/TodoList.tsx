@@ -1,9 +1,10 @@
+import { Todo } from '../types/Todo';
 import TodoListItem from '../TodoListItem/TodoListItem';
 import style from './TodoList.module.css';
+import { OnRemoveTodo } from '../types/OnRemoveTodo';
 
-interface TodoListProps {
-	todoList: any[];
-	onRemoveTodo: (id: string) => void;
+interface TodoListProps extends OnRemoveTodo {
+	todoList: Todo[];
 }
 
 function TodoList({ todoList, onRemoveTodo }: TodoListProps) {

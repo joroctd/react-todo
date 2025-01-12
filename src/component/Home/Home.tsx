@@ -82,8 +82,8 @@ export default function Home() {
 	return (
 		<HomeUI
 			todoList={todoList}
-			addTodo={addTodo}
-			removeTodo={removeTodo}
+			onAddTodo={addTodo}
+			onRemoveTodo={removeTodo}
 		/>
 	);
 }
