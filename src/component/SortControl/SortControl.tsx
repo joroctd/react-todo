@@ -29,9 +29,6 @@ const SortControl = ({ sort, onSort }: SortControlProps) => {
 							{sortKey[0] + sortKey.slice(1).toLowerCase()}
 						</option>
 					))}
-				{/* <option value={Sort.NONE}>None</option>
-				<option value={Sort.VIEW}>View</option>
-				<option value={Sort.FIELD}>Field</option> */}
 			</select>
 		</div>
 	);
