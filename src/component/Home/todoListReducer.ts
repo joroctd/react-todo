@@ -25,7 +25,7 @@ export const todoListReducer = (state: State, action: Action) => {
 		case 'ADD':
 			return {
 				...state,
-				data: [...state.data, action.payload]
+				data: [...state.data, ...action.payload.todos]
 			};
 		case 'REMOVE':
 			return {

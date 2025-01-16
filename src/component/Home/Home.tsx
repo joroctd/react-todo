@@ -21,7 +21,7 @@ export default function Home() {
 		fetchData();
 	}, []);
 
-	const fetchData = async () => {
+	const fetchData = () => {
 		const dataCallback = (data: {
 			records: { id: string; fields: { title: string } }[];
 		}) => {
@@ -45,7 +45,7 @@ export default function Home() {
 		});
 	};
 
-	const addTodo = async (newTodo: string) => {
+	const addTodo = (newTodo: string) => {
 		const options = {
 			method: 'POST',
 			headers: {
