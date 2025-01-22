@@ -1,0 +1,7 @@
+export enum Sort {
+	NONE = 'NONE',
+	VIEW = 'VIEW',
+	FIELD = 'FIELD',
+	ASCENDING = 'ASCENDING',
+	DESCENDING = 'DESCENDING'
+}
