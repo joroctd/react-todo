@@ -1,8 +1,9 @@
 import TodoListItem from './TodoListItem.jsx';
+import style from './TodoList.module.css';
 
 function TodoList({ todoList, removeTodo }) {
 	return (
-		<ul className='todo-list'>
+		<ul className={style.todoList}>
 			{todoList.map(({ id, title }) => (
 				<TodoListItem
 					key={id}
