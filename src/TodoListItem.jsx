@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const TodoListItemStyled = styled.ul`
+const TodoListItemStyled = styled.li`
 	display: flex;
 	gap: 10px;
 	align-items: baseline;
