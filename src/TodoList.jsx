@@ -1,8 +1,15 @@
 import TodoListItem from './TodoListItem.jsx';
+import styled from 'styled-components';
+
+const TodoListStyled = styled.ul`
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+`;
 
 function TodoList({ todoList, removeTodo }) {
 	return (
-		<ul className='todo-list'>
+		<TodoListStyled>
 			{todoList.map(({ id, title }) => (
 				<TodoListItem
 					key={id}
@@ -11,7 +18,7 @@ function TodoList({ todoList, removeTodo }) {
 					removeTodo={removeTodo}
 				/>
 			))}
-		</ul>
+		</TodoListStyled>
 	);
 }
 

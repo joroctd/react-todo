@@ -1,5 +1,12 @@
 import { useState } from 'react';
+import styled from 'styled-components';
 import InputWithLabel from './InputWithLabel';
+
+const Form = styled.form`
+	display: flex;
+	gap: 10px;
+	align-items: baseline;
+`;
 
 function AddTodoForm({ onAddTodo, isLoading }) {
 	const [todoTitle, setTodoTitle] = useState('');
@@ -16,9 +23,7 @@ function AddTodoForm({ onAddTodo, isLoading }) {
 	};
 
 	return (
-		<form
-			className='add-todo-form'
-			onSubmit={handleAddTodo}>
+		<Form onSubmit={handleAddTodo}>
 			<InputWithLabel
 				label='Title'
 				onChange={handleTitleChange}
@@ -26,7 +31,7 @@ function AddTodoForm({ onAddTodo, isLoading }) {
 				Title
 			</InputWithLabel>
 			{isLoading ? <button disabled>Loading...</button> : <button>Add</button>}
-		</form>
+		</Form>
 	);
 }
 
