@@ -1,16 +1,21 @@
 import { useState } from 'react';
 import style from './AddTodoForm.module.css';
-import InputWithLabel from './InputWithLabel';
+import InputWithLabel from '../InputWithLabel/InputWithLabel';
+import { OnAddTodo } from '../propTypes/OnAddTodo';
 
-function AddTodoForm({ onAddTodo, isLoading }) {
+interface AddTodoFormProps extends OnAddTodo {
+	isLoading: boolean;
+}
+
+function AddTodoForm({ onAddTodo, isLoading }: AddTodoFormProps) {
 	const [todoTitle, setTodoTitle] = useState('');
 
-	const handleTitleChange = event => {
+	const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const newTodoTitle = event.target.value;
 		setTodoTitle(newTodoTitle);
 	};
 
-	const handleAddTodo = event => {
+	const handleAddTodo = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		if (todoTitle !== '') {
 			onAddTodo(todoTitle);

@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
-import homeImg from './assets/images/home.png';
-import newImg from './assets/images/new.png';
-import Home from './component/Home';
+import homeImg from '../../assets/images/home.png';
+import newImg from '../../assets/images/new.png';
+import Home from '../Home/Home';
 
 function App() {
 	return (
