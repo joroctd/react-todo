@@ -13,7 +13,8 @@ export const todoListReducer = (state: State, action: Action) => {
 				...state,
 				isLoading: false,
 				isError: false,
-				data: action.payload.todos
+				data: action.payload.todos,
+				sort: action.payload.sort
 			};
 		case 'FETCH_FAILURE':
 			return {

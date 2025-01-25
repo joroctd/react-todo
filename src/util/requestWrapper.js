@@ -7,7 +7,8 @@ export default async ({
 	dataCallback = () => {},
 	errorCallback = () => {},
 	body,
-	id
+	id,
+	queries
 }) => {
 	const expandedOptions = {
 		...options,
@@ -19,7 +20,18 @@ export default async ({
 	if (body) {
 		expandedOptions.body = JSON.stringify({ fields: body });
 	}
-	const requestUrl = id ? `${baseUrl}/${id}` : baseUrl;
+	let requestUrl = baseUrl;
+	if (id) requestUrl += `/${id}`;
+	if (queries) {
+		requestUrl += '?';
+		queries.forEach((query, index) => {
+			for (const name in query) {
+				const value = query[name];
+				requestUrl += `${name}=${value}`;
+			}
+			if (index < queries.length - 1) requestUrl += '&';
+		});
+	}
 
 	try {
 		const response = await fetch(requestUrl, expandedOptions);
