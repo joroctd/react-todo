@@ -4,10 +4,9 @@ export interface Todo {
 }
 
 // example for "TodoMaybe"
-type Partial<T> = {
-	[P in keyof T]?: T[P];
+export type TodoPartial<Todo> = {
+	[TodoKey in keyof Todo]?: Todo[TodoKey];
 };
-export type TodoPartial = Partial<Todo>;
 
 export interface TodoData {
 	id: string;
