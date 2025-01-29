@@ -1,7 +1,19 @@
 import { useRef, useEffect } from 'react';
 
-function InputWithLabel({ inputValue, onChange, children }) {
-	const inputRef = useRef();
+import { inputChangeEventHandler } from '@/types/htmlEvent';
+
+interface InputWithLabelProps {
+	inputValue: string;
+	onChange: inputChangeEventHandler;
+	children: React.ReactNode;
+}
+
+function InputWithLabel({
+	inputValue,
+	onChange,
+	children
+}: InputWithLabelProps) {
+	const inputRef = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
 		// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining

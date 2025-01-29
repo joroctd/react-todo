@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 import './App.css';
-import TodoList from './TodoList.jsx';
-import AddTodoForm from './AddTodoForm.jsx';
+import TodoList from './TodoList';
+import AddTodoForm from './AddTodoForm';
+import { TodoData, Todo, RemoveTodo } from '@/types/Todo';
 
 function App() {
-	const todoListKey = 'savedTodoList';
-	const localTodoList = JSON.parse(localStorage.getItem(todoListKey));
-	const [todoList, setTodoList] = useState([]);
+	const [todoList, setTodoList] = useState<Todo[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
 
 	const fetchData = async () => {
@@ -29,7 +28,7 @@ function App() {
 			}
 
 			const data = await response.json();
-			const todos = data.records.map(todo => ({
+			const todos = data.records.map((todo: TodoData) => ({
 				title: todo.fields.title,
 				id: todo.id
 			}));
@@ -49,7 +48,7 @@ function App() {
 	// 	}
 	// }, [todoList]);
 
-	const addTodo = async newTodo => {
+	const addTodo = async (newTodo: string) => {
 		const options = {
 			method: 'POST',
 			headers: {
@@ -77,8 +76,8 @@ function App() {
 		} catch (error) {}
 	};
 
-	const removeTodo = id => {
-		setTodoList(todoList.filter(todo => todo.id !== id));
+	const removeTodo: RemoveTodo = id => {
+		setTodoList(todoList.filter((todo: Todo) => todo.id !== id));
 	};
 
 	return (

@@ -1,7 +1,14 @@
 import TodoListItem from './TodoListItem.jsx';
 import style from './TodoList.module.css';
 
-function TodoList({ todoList, removeTodo }) {
+import { Todo, RemoveTodo } from '@/types/Todo';
+
+interface TodoListProps {
+	todoList: Todo[];
+	removeTodo: RemoveTodo;
+}
+
+function TodoList({ todoList, removeTodo }: TodoListProps) {
 	return (
 		<ul className={style.todoList}>
 			{todoList.map(({ id, title }) => (
