@@ -1,17 +1,20 @@
 import TodoList from '../TodoList/TodoList';
 import AddTodoForm from '../AddTodoForm/AddTodoForm';
+import SortControl from '../SortControl/SortControl';
 import { State } from '../propTypes/TodoListReducer';
 import { OnAddTodo } from '../propTypes/OnAddTodo';
 import { OnRemoveTodo } from '../propTypes/OnRemoveTodo';
+import { OnSort } from '../propTypes/OnSort';
 
-interface HomeUIProps extends OnAddTodo, OnRemoveTodo {
+interface HomeUIProps extends OnAddTodo, OnRemoveTodo, OnSort {
 	todoList: State;
 }
 
 export default function HomeUI({
 	todoList,
 	onAddTodo,
-	onRemoveTodo
+	onRemoveTodo,
+	onSort
 }: HomeUIProps) {
 	return (
 		<>
@@ -24,10 +27,17 @@ export default function HomeUI({
 			{todoList.isLoading ? (
 				<p>Loading...</p>
 			) : (
-				<TodoList
-					todoList={todoList.data}
-					onRemoveTodo={onRemoveTodo}
-				/>
+				<>
+					<SortControl
+						sort={todoList.sort}
+						onSort={onSort}
+					/>
+					<hr />
+					<TodoList
+						todoList={todoList.data}
+						onRemoveTodo={onRemoveTodo}
+					/>
+				</>
 			)}
 		</>
 	);
