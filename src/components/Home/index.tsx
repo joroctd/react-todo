@@ -31,7 +31,6 @@ export default function Home() {
 
 	type Data = { records: { id: string; fields: { title: string } }[] };
 	type DataCallback = (data: Data) => void;
-
 	interface fetchDataProps {
 		sort?: Sort;
 		queries?: object[];
@@ -111,21 +110,33 @@ export default function Home() {
 		}
 
 		const options: fetchDataProps = { sort };
+
+		if (sort === Sort.NONE) {
+			fetchData(options);
+			return;
+		}
+
+		if (shouldServerSort) {
+			options.queries = [
+				{ view: 'Grid%20view' },
+				{ 'sort[0][field]': 'title' }
+			];
+
+			switch (sort) {
+				case Sort.ASCENDING:
+					options.queries.push({ 'sort[0][direction]': 'asc' });
+					break;
+				case Sort.DESCENDING:
+					options.queries.push({ 'sort[0][direction]': 'desc' });
+					break;
+			}
+
+			fetchData(options);
+			return;
+		}
+
 		let manualSort = null;
 		switch (sort) {
-			case Sort.NONE:
-				break;
-
-			case Sort.VIEW:
-				options.queries = [{ view: 'Grid%20view' }];
-				break;
-			case Sort.FIELD:
-				options.queries = [
-					{ 'sort[0][field]': 'title' },
-					{ 'sort[0][direction]': 'asc' }
-				];
-				break;
-
 			case Sort.ASCENDING:
 				manualSort = (a: Todo, b: Todo) => a.title.localeCompare(b.title);
 				break;
@@ -133,22 +144,14 @@ export default function Home() {
 				manualSort = (a: Todo, b: Todo) => b.title.localeCompare(a.title);
 				break;
 		}
-
 		if (manualSort) {
-			options.dataCallback = (data: Data) => {
-				const todos = data.records.map(({ id, fields: { title } }) => ({
-					id,
-					title
-				}));
-				dispatchTodoList({
-					type: 'FETCH_SUCCESS',
-					payload: { todos: todos.sort(manualSort), sort }
-				});
-			};
+			const todos = [...todoList.data].sort(manualSort);
+			dispatchTodoList({
+				type: 'FETCH_SUCCESS',
+				payload: { todos, sort }
+			});
 			return;
 		}
-
-		if (shouldServerSort) fetchData(options);
 	};
 
 	return (

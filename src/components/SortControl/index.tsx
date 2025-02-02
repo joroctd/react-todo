@@ -36,6 +36,7 @@ const SortControl = ({
 						</option>
 					))}
 			</select>
+
 			<label
 				htmlFor='serverSortToggle'
 				style={{ marginLeft: '10px' }}>

@@ -5,14 +5,6 @@ import path from 'path';
 // https://vite.dev/config/
 export default defineConfig({
 	plugins: [react()],
-	optimizeDeps: {
-		esbuildOptions: {
-			target: 'esnext'
-		}
-	},
-	build: {
-		target: 'es2020'
-	},
 	resolve: {
 		alias: {
 			'@components': path.resolve(__dirname, 'src/components'),
