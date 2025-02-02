@@ -1,25 +1,31 @@
-import { OnSort } from '@/types/OnSort';
-import { Sort } from '@/types/Sort';
+import { OnSort } from '../types/OnSort';
+import { ServerSortState, Sort } from '../types/Sort';
 
-interface SortControlProps extends OnSort {
+interface SortControlProps extends OnSort, ServerSortState {
 	sort: Sort;
 }
 
-const SortControl = ({ sort, onSort }: SortControlProps) => {
-	const onChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+const SortControl = ({
+	sort,
+	onSort,
+	shouldServerSort,
+	setServerSort
+}: SortControlProps) => {
+	const onChangeSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		onSort(e.target.value as Sort);
 	};
 
-	// could create an order option, with asc. / desc. there
-	//  and then remove the Airtable options to fully have sorting
-	//  be controlled on the client side
+	const onChangeToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setServerSort(e.target.checked);
+	};
+
 	return (
 		<div>
 			<label htmlFor='sortControl'>Sort By: </label>
 			<select
 				id='sortControl'
 				value={sort}
-				onChange={onChange}>
+				onChange={onChangeSort}>
 				{Object.keys(Sort)
 					.filter(k => isNaN(Number(k)))
 					.map(sortKey => (
@@ -30,6 +36,17 @@ const SortControl = ({ sort, onSort }: SortControlProps) => {
 						</option>
 					))}
 			</select>
+			<label
+				htmlFor='serverSortToggle'
+				style={{ marginLeft: '10px' }}>
+				Server-side Sorting:
+			</label>
+			<input
+				id='serverSortToggle'
+				type='checkbox'
+				checked={shouldServerSort}
+				onChange={onChangeToggle}
+			/>
 		</div>
 	);
 };

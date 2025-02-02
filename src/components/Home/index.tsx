@@ -1,9 +1,9 @@
-import { useEffect, useReducer, useRef } from 'react';
+import { useEffect, useReducer, useState, useRef } from 'react';
 import { todoListReducer } from './todoListReducer';
-import requestWrapper from '@/utils/requestWrapper';
+import requestWrapper from '@utils/requestWrapper';
 import HomeUI from './HomeUI';
-import { Sort } from '@/types/Sort';
-import { Todo } from '@/types/Todo';
+import { Sort } from '../types/Sort';
+import { Todo } from '../types/Todo';
 
 export default function Home() {
 	const isMounted = useRef(false);
@@ -13,6 +13,12 @@ export default function Home() {
 		isLoading: false,
 		isError: false
 	});
+	const [shouldServerSort, setShouldServerSort] = useState(false);
+	const prevShouldServerSort = useRef(false);
+
+	useEffect(() => {
+		prevShouldServerSort.current = shouldServerSort;
+	}, [shouldServerSort]);
 
 	useEffect(() => {
 		if (!isMounted.current) {
@@ -97,9 +103,14 @@ export default function Home() {
 	};
 
 	const sortData = (sort: Sort) => {
-		if (sort === todoList.sort) return;
+		if (
+			sort === todoList.sort &&
+			shouldServerSort === prevShouldServerSort.current
+		) {
+			return;
+		}
 
-		const options: any = { sort };
+		const options: fetchDataProps = { sort };
 		let manualSort = null;
 		switch (sort) {
 			case Sort.NONE:
@@ -116,18 +127,10 @@ export default function Home() {
 				break;
 
 			case Sort.ASCENDING:
-				manualSort = (objectA: Todo, objectB: Todo) => {
-					if (objectA.title < objectB.title) return -1;
-					if (objectA.title > objectB.title) return 1;
-					return 0;
-				};
+				manualSort = (a: Todo, b: Todo) => a.title.localeCompare(b.title);
 				break;
 			case Sort.DESCENDING:
-				manualSort = (objectA: Todo, objectB: Todo) => {
-					if (objectA.title > objectB.title) return -1;
-					if (objectA.title < objectB.title) return 1;
-					return 0;
-				};
+				manualSort = (a: Todo, b: Todo) => b.title.localeCompare(a.title);
 				break;
 		}
 
@@ -142,9 +145,10 @@ export default function Home() {
 					payload: { todos: todos.sort(manualSort), sort }
 				});
 			};
+			return;
 		}
 
-		fetchData(options);
+		if (shouldServerSort) fetchData(options);
 	};
 
 	return (
@@ -153,6 +157,8 @@ export default function Home() {
 			onAddTodo={addTodo}
 			onRemoveTodo={removeTodo}
 			onSort={sortData}
+			shouldServerSort={shouldServerSort}
+			setServerSort={setShouldServerSort}
 		/>
 	);
 }

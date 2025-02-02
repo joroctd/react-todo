@@ -129,7 +129,7 @@ Use of third-party CSS libraries is discouraged for this project, we want to see
 ## Extra:
 
 - [x] Set up component directories to use an index file for exports (per [https://github.com/joroctd/react-todo/pull/11#discussion_r1924101718](https://github.com/joroctd/react-todo/pull/11#discussion_r1924101718))
-- [ ] Decouple `sortData` (per [https://github.com/joroctd/react-todo/pull/12#issuecomment-2605971857](https://github.com/joroctd/react-todo/pull/12#issuecomment-2605971857))
+- [x] Decouple `sortData` (per [https://github.com/joroctd/react-todo/pull/12#issuecomment-2605971857](https://github.com/joroctd/react-todo/pull/12#issuecomment-2605971857))
 - [ ] Clean up types
 - [ ] Deploy
 

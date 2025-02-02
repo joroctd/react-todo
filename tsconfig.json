@@ -3,10 +3,9 @@
         "jsx": "preserve",
         "lib": ["dom", "ES2020"],
         "paths": {
-            "@/components/*": ["./src/components/*"],
-            "@/types/*": ["./src/types/*"],
-            "@/assets/*": ["./src/assets/*"],
-            "@/utils/*": ["./src/utils/*"]
+            "@components/*": ["./src/components/*"],
+            "@assets/*": ["./src/assets/*"],
+            "@utils/*": ["./src/utils/*"]
         }
     },
     "include": ["src"]

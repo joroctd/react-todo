@@ -5,3 +5,8 @@ export enum Sort {
 	ASCENDING = 'ASCENDING',
 	DESCENDING = 'DESCENDING'
 }
+
+export interface ServerSortState {
+	shouldServerSort: boolean;
+	setServerSort: (value: boolean) => void;
+}
