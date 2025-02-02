@@ -1,10 +1,10 @@
 import TodoList from '@/components/TodoList';
 import AddTodoForm from '@/components/AddTodoForm';
 import SortControl from '@/components/SortControl';
-import { State } from '@/types/TodoListReducer';
-import { OnAddTodo } from '@/types/OnAddTodo';
-import { OnRemoveTodo } from '@/types/OnRemoveTodo';
-import { OnSort } from '@/types/OnSort';
+import { State } from '../../types/TodoListReducer';
+import { OnAddTodo } from '../../types/OnAddTodo';
+import { OnRemoveTodo } from '../../types/OnRemoveTodo';
+import { OnSort } from '../../types/OnSort';
 
 interface HomeUIProps extends OnAddTodo, OnRemoveTodo, OnSort {
 	todoList: State;
