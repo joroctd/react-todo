@@ -1,7 +1,13 @@
 {
     "compilerOptions": {
         "jsx": "preserve",
-        "lib": ["dom", "ES2020"]
+        "lib": ["dom", "ES2020"],
+        "paths": {
+            "@/components/*": ["./src/components/*"],
+            "@/types/*": ["./src/components/types/*"],
+            "@/assets/*": ["./src/assets/*"],
+            "@/utils/*": ["./src/utils/*"]
+        }
     },
     "include": ["src"]
 }

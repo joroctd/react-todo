@@ -1,6 +1,6 @@
 import style from './TodoListItem.module.css';
-import { Todo } from '../propTypes/Todo';
-import { OnRemoveTodo } from '../propTypes/OnRemoveTodo';
+import { Todo } from '@/types/Todo';
+import { OnRemoveTodo } from '@/types/OnRemoveTodo';
 
 interface TodoListItemProps extends Todo, OnRemoveTodo {}
 

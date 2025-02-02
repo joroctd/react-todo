@@ -1,7 +1,7 @@
-import { Todo } from '../propTypes/Todo';
-import TodoListItem from '../TodoListItem/TodoListItem';
+import { Todo } from '@/types/Todo';
+import TodoListItem from '@/components/TodoListItem';
 import style from './TodoList.module.css';
-import { OnRemoveTodo } from '../propTypes/OnRemoveTodo';
+import { OnRemoveTodo } from '@/types/OnRemoveTodo';
 
 interface TodoListProps extends OnRemoveTodo {
 	todoList: Todo[];

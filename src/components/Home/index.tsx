@@ -1,9 +1,9 @@
 import { useEffect, useReducer, useRef } from 'react';
 import { todoListReducer } from './todoListReducer';
-import requestWrapper from '../../util/requestWrapper';
+import requestWrapper from '@/utils/requestWrapper';
 import HomeUI from './HomeUI';
-import { Sort } from '../propTypes/Sort';
-import { Todo } from '../propTypes/Todo';
+import { Sort } from '@/types/Sort';
+import { Todo } from '@/types/Todo';
 
 export default function Home() {
 	const isMounted = useRef(false);

@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react';
 import style from './InputWithLabel.module.css';
-import { OnChange } from '../propTypes/OnChange';
+import { OnChange } from '@/types/OnChange';
 
 interface InputWithLabelProps extends OnChange {
 	id: string;

@@ -1,5 +1,5 @@
-import { OnSort } from '../propTypes/OnSort';
-import { Sort } from '../propTypes/Sort';
+import { OnSort } from '../types/OnSort';
+import { Sort } from '../types/Sort';
 
 interface SortControlProps extends OnSort {
 	sort: Sort;
