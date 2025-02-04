@@ -4,7 +4,7 @@ import style from './AddTodoForm.module.css';
 import {
 	inputChangeEventHandler,
 	formSubmitEventHandler
-} from '@/types/HtmlEvent';
+} from './types/HtmlEvent';
 
 interface AddTodoFormProps {
 	onAddTodo: (title: string) => void;
@@ -30,7 +30,7 @@ function AddTodoForm({ onAddTodo, isLoading }: AddTodoFormProps) {
 			className={style.addTodoForm}
 			onSubmit={handleAddTodo}>
 			<InputWithLabel
-				label='Title'
+				label='todoTitle'
 				onChange={handleTitleChange}
 				inputValue={todoTitle}>
 				Title

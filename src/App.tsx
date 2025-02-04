@@ -2,11 +2,15 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import TodoList from './TodoList';
 import AddTodoForm from './AddTodoForm';
-import { TodoData, Todo, RemoveTodo } from '@/types/Todo';
+import SortControl from './SortControl';
+import { TodoData, Todo, RemoveTodo } from './types/Todo';
+import { Order, Field } from './types/Sort';
 
 function App() {
 	const [todoList, setTodoList] = useState<Todo[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
+	const [sortOrder, setSortOrder] = useState<Order>(Order.NONE);
+	const [sortField, setSortField] = useState<Field>(Field.CREATED_TIME);
 
 	const fetchData = async () => {
 		const options = {
@@ -30,16 +34,13 @@ function App() {
 			}
 
 			const data = await response.json();
-			const todos = data.records
-				.map((todo: TodoData) => ({
+			let todos = data.records.map((todo: TodoData) => {
+				return {
 					title: todo.fields.title,
+					createdTime: todo.createdTime,
 					id: todo.id
-				}))
-				.sort((a: Todo, b: Todo) => {
-					if (a.title < b.title) return 1;
-					if (a.title === b.title) return 0;
-					return -1;
-				});
+				};
+			});
 
 			setTodoList(todos);
 			setIsLoading(false);
@@ -50,11 +51,42 @@ function App() {
 		fetchData();
 	}, []);
 
-	// useEffect(() => {
-	// 	if (!isLoading) {
-	// 		localStorage.setItem(todoListKey, JSON.stringify(todoList));
-	// 	}
-	// }, [todoList]);
+	const sortData = (todos: Todo[]) => {
+		if (sortOrder !== Order.NONE) {
+			let sortFunction = (a: Todo, b: Todo) => {
+				return 0;
+			};
+			switch (sortOrder) {
+				case Order.ASCENDING:
+					sortFunction = (a, b) => {
+						if (a[sortField] && b[sortField]) {
+							if (a[sortField] < b[sortField]) return -1;
+							if (a[sortField] === b[sortField]) return 0;
+						}
+						return 1;
+					};
+					break;
+				case Order.DESCENDING:
+					sortFunction = (a, b) => {
+						if (a[sortField] && b[sortField]) {
+							if (a[sortField] < b[sortField]) return 1;
+							if (a[sortField] === b[sortField]) return 0;
+						}
+						return -1;
+					};
+					break;
+				default:
+					console.error('Sort order not implemented.');
+					return todoList;
+			}
+			return [...todos].sort(sortFunction);
+		}
+		return todoList;
+	};
+
+	useEffect(() => {
+		setTodoList(todos => sortData(todos));
+	}, [sortOrder, sortField]);
 
 	const addTodo = async (newTodo: string) => {
 		const options = {
@@ -94,6 +126,13 @@ function App() {
 			<AddTodoForm
 				onAddTodo={addTodo}
 				isLoading={isLoading}
+			/>
+			<hr />
+			<SortControl
+				sortOrder={sortOrder}
+				sortField={sortField}
+				setSortOrder={setSortOrder}
+				setSortField={setSortField}
 			/>
 			<hr />
 			{isLoading ? (

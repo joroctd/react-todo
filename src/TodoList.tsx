@@ -1,7 +1,7 @@
 import TodoListItem from './TodoListItem.jsx';
 import style from './TodoList.module.css';
 
-import { Todo, RemoveTodo } from '@/types/Todo';
+import { Todo, RemoveTodo } from './types/Todo';
 
 interface TodoListProps {
 	todoList: Todo[];

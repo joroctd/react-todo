@@ -1,14 +1,16 @@
 import { useRef, useEffect } from 'react';
 
-import { inputChangeEventHandler } from '@/types/htmlEvent';
+import { inputChangeEventHandler } from './types/HtmlEvent';
 
 interface InputWithLabelProps {
+	label: string;
 	inputValue: string;
 	onChange: inputChangeEventHandler;
 	children: React.ReactNode;
 }
 
 function InputWithLabel({
+	label,
 	inputValue,
 	onChange,
 	children
@@ -22,10 +24,10 @@ function InputWithLabel({
 
 	return (
 		<>
-			<label htmlFor='todo-title'>{children}: </label>
+			<label htmlFor={label}>{children}: </label>
 			<input
-				id='todo-title'
-				name='title'
+				id={label}
+				name={label}
 				value={inputValue}
 				onChange={onChange}
 				ref={inputRef}
