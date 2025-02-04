@@ -1,8 +1,6 @@
-# React + Vite
+# Stretch
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [ ] Create a toggle button so the user can switch between ascending and descending sort order
+- [ ] Sort by a different field, such as createdTime
+- [ ] Currently we need to refresh the browser in order to sort new tasks by date. Have a new task automatically sorted when added.
+      HINT: Using the hooks already imported/in place: how would you update the code so the app's state changes with the new task?

@@ -17,7 +17,9 @@ function App() {
 		};
 		const url = `https://api.airtable.com/v0/${
 			import.meta.env.VITE_AIRTABLE_BASE_ID
-		}/${import.meta.env.VITE_TABLE_NAME}`;
+		}/${
+			import.meta.env.VITE_TABLE_NAME
+		}?view=Grid%20view&sort[0][field]=title&sort[0][direction]=asc`;
 
 		try {
 			setIsLoading(true);
@@ -28,10 +30,16 @@ function App() {
 			}
 
 			const data = await response.json();
-			const todos = data.records.map((todo: TodoData) => ({
-				title: todo.fields.title,
-				id: todo.id
-			}));
+			const todos = data.records
+				.map((todo: TodoData) => ({
+					title: todo.fields.title,
+					id: todo.id
+				}))
+				.sort((a: Todo, b: Todo) => {
+					if (a.title < b.title) return 1;
+					if (a.title === b.title) return 0;
+					return -1;
+				});
 
 			setTodoList(todos);
 			setIsLoading(false);
