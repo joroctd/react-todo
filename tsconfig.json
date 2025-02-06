@@ -7,7 +7,7 @@
             "@components/*": ["./src/components/*"],
             "@assets/*": ["./src/assets/*"],
             "@utils/*": ["./src/utils/*"]
-        }
+        },
     },
-    "include": ["src"]
+    "include": ["./src/**/*"]
 }
