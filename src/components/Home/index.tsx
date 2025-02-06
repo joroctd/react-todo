@@ -25,17 +25,14 @@ export default function Home() {
 	const prevShouldServerSort = useRef(false);
 
 	useEffect(() => {
-		console.log('shouldServerSort', shouldServerSort);
 		prevShouldServerSort.current = shouldServerSort;
 	}, [shouldServerSort]);
 
 	useEffect(() => {
-		if (!isMounted.current) {
+		if (import.meta.env.ENVIRONMENT === 'development' && !isMounted.current) {
 			isMounted.current = true;
 			return;
 		}
-
-		console.log('fetchData');
 
 		fetchData();
 	}, []);

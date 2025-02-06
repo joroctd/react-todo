@@ -2,6 +2,7 @@
     "compilerOptions": {
         "jsx": "preserve",
         "lib": ["dom", "ES2020"],
+        "module": "ES2020",
         "paths": {
             "@components/*": ["./src/components/*"],
             "@assets/*": ["./src/assets/*"],
