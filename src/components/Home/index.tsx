@@ -5,6 +5,14 @@ import HomeUI from './HomeUI';
 import { Sort } from '../types/Sort';
 import { Todo } from '../types/Todo';
 
+type Data = { records: { id: string; fields: { title: string } }[] };
+type DataCallback = (data: Data) => void;
+interface fetchDataProps {
+	sort?: Sort;
+	queries?: object[];
+	dataCallback?: DataCallback;
+}
+
 export default function Home() {
 	const isMounted = useRef(false);
 	const [todoList, dispatchTodoList] = useReducer(todoListReducer, {
@@ -28,14 +36,6 @@ export default function Home() {
 
 		fetchData();
 	}, []);
-
-	type Data = { records: { id: string; fields: { title: string } }[] };
-	type DataCallback = (data: Data) => void;
-	interface fetchDataProps {
-		sort?: Sort;
-		queries?: object[];
-		dataCallback?: DataCallback;
-	}
 
 	const fetchData = ({
 		sort,
