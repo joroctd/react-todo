@@ -25,6 +25,7 @@ export default function Home() {
 	const prevShouldServerSort = useRef(false);
 
 	useEffect(() => {
+		console.log('shouldServerSort', shouldServerSort);
 		prevShouldServerSort.current = shouldServerSort;
 	}, [shouldServerSort]);
 
@@ -33,6 +34,8 @@ export default function Home() {
 			isMounted.current = true;
 			return;
 		}
+
+		console.log('fetchData');
 
 		fetchData();
 	}, []);
