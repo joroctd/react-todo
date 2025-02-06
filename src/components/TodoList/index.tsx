@@ -1,13 +1,14 @@
-import TodoListItem from '@components/TodoListItem';
+import { FC } from 'react';
+import TodoListItem from '@/components/TodoListItem';
 import style from './TodoList.module.css';
-import { Todo } from '../types/Todo';
-import { OnRemoveTodo } from '../types/OnRemoveTodo';
+import type { Todo } from '../types/Todo';
+import type { OnRemoveTodo } from '../types/OnRemoveTodo';
 
 interface TodoListProps extends OnRemoveTodo {
 	todoList: Todo[];
 }
 
-function TodoList({ todoList, onRemoveTodo }: TodoListProps) {
+const TodoList: FC<TodoListProps> = ({ todoList, onRemoveTodo }) => {
 	return (
 		<ul className={style.todoList}>
 			{todoList.map(({ id, title }) => (
@@ -20,6 +21,6 @@ function TodoList({ todoList, onRemoveTodo }: TodoListProps) {
 			))}
 		</ul>
 	);
-}
+};
 
 export default TodoList;

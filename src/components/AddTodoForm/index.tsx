@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import style from './AddTodoForm.module.css';
-import InputWithLabel from '@components/InputWithLabel';
+import InputWithLabel from '@/components/InputWithLabel';
 import { OnAddTodo } from '../types/OnAddTodo';
-import { onInputChange, onFormEvent } from '@components/types/OnEvent';
+import { onInputChange, onFormEvent } from '@/components/types/OnEvent';
 
 interface AddTodoFormProps extends OnAddTodo {
 	isLoading: boolean;

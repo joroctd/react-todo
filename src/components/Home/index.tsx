@@ -1,9 +1,9 @@
-import { useEffect, useReducer, useState, useRef } from 'react';
+import { FC, useEffect, useReducer, useState, useRef } from 'react';
 import { todoListReducer } from './todoListReducer';
-import requestWrapper from '@utils/requestWrapper';
+import requestWrapper from '@/utils/requestWrapper';
 import HomeUI from './HomeUI';
 import { Sort } from '../types/Sort';
-import { Todo } from '../types/Todo';
+import type { Todo } from '../types/Todo';
 
 type Data = { records: { id: string; fields: { title: string } }[] };
 type DataCallback = (data: Data) => void;
@@ -13,7 +13,7 @@ interface fetchDataProps {
 	dataCallback?: DataCallback;
 }
 
-export default function Home() {
+const Home: FC = () => {
 	const isMounted = useRef(false);
 	const [todoList, dispatchTodoList] = useReducer(todoListReducer, {
 		data: [],
@@ -164,4 +164,6 @@ export default function Home() {
 			setServerSort={setShouldServerSort}
 		/>
 	);
-}
+};
+
+export default Home;

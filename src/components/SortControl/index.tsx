@@ -1,16 +1,18 @@
-import { OnSort } from '../types/OnSort';
-import { ServerSortState, Sort } from '../types/Sort';
+import { FC } from 'react';
+import type { OnSort } from '../types/OnSort';
+import type { ServerSortState } from '../types/Sort';
+import { Sort } from '../types/Sort';
 
 interface SortControlProps extends OnSort, ServerSortState {
 	sort: Sort;
 }
 
-const SortControl = ({
+const SortControl: FC<SortControlProps> = ({
 	sort,
 	onSort,
 	shouldServerSort,
 	setServerSort
-}: SortControlProps) => {
+}) => {
 	const onChangeSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		onSort(e.target.value as Sort);
 	};
