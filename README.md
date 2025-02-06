@@ -129,11 +129,7 @@ Use of third-party CSS libraries is discouraged for this project, we want to see
 ## Extra:
 
 - [x] Set up component directories to use an index file for exports (per [https://github.com/joroctd/react-todo/pull/11#discussion_r1924101718](https://github.com/joroctd/react-todo/pull/11#discussion_r1924101718))
-- [x] Decouple `sortData` (per [https://github.com/joroctd/react-todo/pull/12#issuecomment-2605971857](https://github.com/joroctd/react-todo/pull/12#issuecomment-2605971857))
+- [x] Address the coupling of `sortData` with `fetchData` (per [https://github.com/joroctd/react-todo/pull/12#issuecomment-2605971857](https://github.com/joroctd/react-todo/pull/12#issuecomment-2605971857))
       I do realize that the `sortData` function still utilizes the `fetchData` function heavily, but I think it is better organzied and clearer in how and why it's doing so now. I wanted to maintain the options for both server and client side sorting just for the sake of it mostly. I'd probably just remove the server side rendering altogether in a production application if given the option.
 - [x] Clean up types
-- [ ] Deploy
-
-## Potential extra:
-
-- [ ] Add ability to have separate (multiple) lists
+- [x] Deploy
