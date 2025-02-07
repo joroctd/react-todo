@@ -1,4 +1,5 @@
 import { FC, useEffect, useReducer, useState, useRef } from 'react';
+import { useAuth } from '@clerk/clerk-react';
 import { todoListReducer } from './todoListReducer';
 import requestWrapper from '@/utils/requestWrapper';
 import HomeUI from './HomeUI';
@@ -14,7 +15,6 @@ interface fetchDataProps {
 }
 
 const Home: FC = () => {
-	const isMounted = useRef(false);
 	const [todoList, dispatchTodoList] = useReducer(todoListReducer, {
 		data: [],
 		sort: Sort.NONE,
@@ -23,19 +23,17 @@ const Home: FC = () => {
 	});
 	const [shouldServerSort, setShouldServerSort] = useState(false);
 	const prevShouldServerSort = useRef(false);
+	const { userId, isLoaded, isSignedIn } = useAuth();
 
 	useEffect(() => {
 		prevShouldServerSort.current = shouldServerSort;
 	}, [shouldServerSort]);
 
 	useEffect(() => {
-		if (import.meta.env.ENVIRONMENT === 'development' && !isMounted.current) {
-			isMounted.current = true;
-			return;
+		if (isSignedIn && isLoaded) {
+			fetchData();
 		}
-
-		fetchData();
-	}, []);
+	}, [isSignedIn, isLoaded]);
 
 	const fetchData = ({
 		sort,
@@ -63,7 +61,8 @@ const Home: FC = () => {
 		requestWrapper({
 			dataCallback,
 			errorCallback,
-			queries
+			queries,
+			userId
 		});
 	};
 
@@ -86,7 +85,8 @@ const Home: FC = () => {
 			dataCallback,
 			body: {
 				title: newTodo
-			}
+			},
+			userId
 		});
 	};
 
@@ -98,7 +98,7 @@ const Home: FC = () => {
 			const { id } = data;
 			dispatchTodoList({ type: 'REMOVE', payload: { id } });
 		};
-		requestWrapper({ options, dataCallback, id });
+		requestWrapper({ options, dataCallback, id, userId });
 	};
 
 	const sortData = (sort: Sort) => {
