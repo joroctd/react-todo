@@ -1,11 +1,12 @@
 import { FC, useRef, useEffect } from 'react';
 import style from './InputWithLabel.module.css';
-import type { OnChange } from '../types/OnEvent';
+import type { onInputChange } from '../types/OnEvent';
 
-interface InputWithLabelProps extends OnChange {
+interface InputWithLabelProps {
 	id: string;
 	name?: string;
 	value: string;
+	onChange: onInputChange;
 	children: React.ReactNode;
 }
 
