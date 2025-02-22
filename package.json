@@ -8,7 +8,7 @@
 		"tsc": "tsc --noEmit --watch",
 		"dev-unix": "npm run tsc & npm run dev",
 		"dev-win": "start npm run tsc && start npm run dev",
-		"build": "vite build",
+		"build": "tsc --noEmit && vite build",
 		"lint": "eslint .",
 		"preview": "vite preview"
 	},

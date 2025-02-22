@@ -1,4 +1,4 @@
-import { FC, useEffect, useReducer, useState, useRef } from 'react';
+import { FC, useEffect, useReducer } from 'react';
 import { useAuth } from '@clerk/clerk-react';
 import { todoListReducer } from './todoListReducer';
 import requestWrapper from '@/utils/requestWrapper';
@@ -93,13 +93,14 @@ const Home: FC = () => {
 	const sortData = (sort: Sort) => {
 		if (sort === todoList.sort) return;
 
-		let manualSort = null;
+		let manualSort: null | ((a: Required<Todo>, b: Required<Todo>) => number) =
+			null;
 		switch (sort) {
 			case Sort.ASCENDING:
-				manualSort = (a: Todo, b: Todo) => a.title.localeCompare(b.title);
+				manualSort = (a, b) => a.title.localeCompare(b.title);
 				break;
 			case Sort.DESCENDING:
-				manualSort = (a: Todo, b: Todo) => b.title.localeCompare(a.title);
+				manualSort = (a, b) => b.title.localeCompare(a.title);
 				break;
 			default:
 				return;

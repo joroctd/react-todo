@@ -7,7 +7,12 @@
         "paths": {
             "@/*": ["./src/*"],
         },
+        "useDefineForClassFields": true,
+        "incremental": false,
+        "skipLibCheck": true,
+        "noUnusedLocals": true,
         "isolatedModules": true,
+        "noEmit": true,
         "types": ["vite/client"]
     },
     "include": ["./src/**/*"]

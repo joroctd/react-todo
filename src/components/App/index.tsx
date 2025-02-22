@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { SignIn, SignUp } from '@clerk/clerk-react';
 import './App.css';
 import AuthLayout from './AuthLayout';
