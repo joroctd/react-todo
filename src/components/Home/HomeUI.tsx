@@ -6,9 +6,8 @@ import type { State } from '../types/TodoListReducer';
 import type { OnAddTodo } from '../types/OnAddTodo';
 import type { OnRemoveTodo } from '../types/OnRemoveTodo';
 import type { OnSort } from '../types/OnSort';
-import type { ServerSortState } from '../types/Sort';
 
-interface HomeUIProps extends OnAddTodo, OnRemoveTodo, OnSort, ServerSortState {
+interface HomeUIProps extends OnAddTodo, OnRemoveTodo, OnSort {
 	todoList: State;
 }
 
@@ -16,9 +15,7 @@ const HomeUI: FC<HomeUIProps> = ({
 	todoList,
 	onAddTodo,
 	onRemoveTodo,
-	onSort,
-	shouldServerSort,
-	setServerSort
+	onSort
 }) => {
 	return (
 		<>
@@ -35,8 +32,6 @@ const HomeUI: FC<HomeUIProps> = ({
 					<SortControl
 						sort={todoList.sort}
 						onSort={onSort}
-						shouldServerSort={shouldServerSort}
-						setServerSort={setServerSort}
 					/>
 					<hr />
 					<TodoList

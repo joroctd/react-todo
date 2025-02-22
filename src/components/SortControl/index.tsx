@@ -1,24 +1,14 @@
 import { FC } from 'react';
 import type { OnSort } from '../types/OnSort';
-import type { ServerSortState } from '../types/Sort';
 import { Sort } from '../types/Sort';
 
-interface SortControlProps extends OnSort, ServerSortState {
+interface SortControlProps extends OnSort {
 	sort: Sort;
 }
 
-const SortControl: FC<SortControlProps> = ({
-	sort,
-	onSort,
-	shouldServerSort,
-	setServerSort
-}) => {
+const SortControl: FC<SortControlProps> = ({ sort, onSort }) => {
 	const onChangeSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		onSort(e.target.value as Sort);
-	};
-
-	const onChangeToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setServerSort(e.target.checked);
 	};
 
 	return (
@@ -38,18 +28,6 @@ const SortControl: FC<SortControlProps> = ({
 						</option>
 					))}
 			</select>
-
-			<label
-				htmlFor='serverSortToggle'
-				style={{ marginLeft: '10px' }}>
-				Server-side Sorting:
-			</label>
-			<input
-				id='serverSortToggle'
-				type='checkbox'
-				checked={shouldServerSort}
-				onChange={onChangeToggle}
-			/>
 		</div>
 	);
 };

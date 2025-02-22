@@ -9,7 +9,6 @@ import type { Todo } from '../types/Todo';
 type Data = { records: { id: string; fields: { title: string } }[] };
 type DataCallback = (data: Data) => void;
 interface fetchDataProps {
-	sort?: Sort;
 	queries?: object[];
 	dataCallback?: DataCallback;
 }
@@ -21,13 +20,7 @@ const Home: FC = () => {
 		isLoading: false,
 		isError: false
 	});
-	const [shouldServerSort, setShouldServerSort] = useState(false);
-	const prevShouldServerSort = useRef(false);
 	const { userId, isLoaded, isSignedIn } = useAuth();
-
-	useEffect(() => {
-		prevShouldServerSort.current = shouldServerSort;
-	}, [shouldServerSort]);
 
 	useEffect(() => {
 		if (isSignedIn && isLoaded) {
@@ -36,7 +29,6 @@ const Home: FC = () => {
 	}, [isSignedIn, isLoaded]);
 
 	const fetchData = ({
-		sort,
 		queries,
 		dataCallback = data => {
 			const todos = data.records.map(({ id, fields: { title } }) => ({
@@ -45,7 +37,7 @@ const Home: FC = () => {
 			}));
 			dispatchTodoList({
 				type: 'FETCH_SUCCESS',
-				payload: { todos, sort }
+				payload: { todos, sort: todoList.sort }
 			});
 		}
 	}: fetchDataProps = {}) => {
@@ -102,38 +94,7 @@ const Home: FC = () => {
 	};
 
 	const sortData = (sort: Sort) => {
-		if (
-			sort === todoList.sort &&
-			shouldServerSort === prevShouldServerSort.current
-		) {
-			return;
-		}
-
-		const options: fetchDataProps = { sort };
-
-		if (sort === Sort.NONE) {
-			fetchData(options);
-			return;
-		}
-
-		if (shouldServerSort) {
-			options.queries = [
-				{ view: 'Grid%20view' },
-				{ 'sort[0][field]': 'title' }
-			];
-
-			switch (sort) {
-				case Sort.ASCENDING:
-					options.queries.push({ 'sort[0][direction]': 'asc' });
-					break;
-				case Sort.DESCENDING:
-					options.queries.push({ 'sort[0][direction]': 'desc' });
-					break;
-			}
-
-			fetchData(options);
-			return;
-		}
+		if (sort === todoList.sort) return;
 
 		let manualSort = null;
 		switch (sort) {
@@ -143,15 +104,15 @@ const Home: FC = () => {
 			case Sort.DESCENDING:
 				manualSort = (a: Todo, b: Todo) => b.title.localeCompare(a.title);
 				break;
+			default:
+				return;
 		}
-		if (manualSort) {
-			const todos = [...todoList.data].sort(manualSort);
-			dispatchTodoList({
-				type: 'FETCH_SUCCESS',
-				payload: { todos, sort }
-			});
-			return;
-		}
+
+		const todos = [...todoList.data].sort(manualSort);
+		dispatchTodoList({
+			type: 'FETCH_SUCCESS',
+			payload: { todos, sort }
+		});
 	};
 
 	return (
@@ -160,8 +121,6 @@ const Home: FC = () => {
 			onAddTodo={addTodo}
 			onRemoveTodo={removeTodo}
 			onSort={sortData}
-			shouldServerSort={shouldServerSort}
-			setServerSort={setShouldServerSort}
 		/>
 	);
 };
