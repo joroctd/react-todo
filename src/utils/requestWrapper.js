@@ -8,7 +8,6 @@ export default async ({
 	errorCallback = () => {},
 	body,
 	id,
-	queries = [],
 	userId
 }) => {
 	if (!userId) throw new Error('Error: Authentication error!');
@@ -28,17 +27,7 @@ export default async ({
 	if (id) requestUrl += `/${id}`;
 
 	if (options.method === 'GET') {
-		queries.unshift({ filterByFormula: `userId = '${userId}'` });
-	}
-	if (queries.length) {
-		requestUrl += '?';
-		queries.forEach((query, index) => {
-			for (const name in query) {
-				const value = query[name];
-				requestUrl += `${name}=${value}`;
-			}
-			if (index < queries.length - 1) requestUrl += '&';
-		});
+		requestUrl += `?filterByFormula=userId = '${userId}'`;
 	}
 
 	try {

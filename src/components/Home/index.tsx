@@ -9,7 +9,6 @@ import type { Todo } from '../types/Todo';
 type Data = { records: { id: string; fields: { title: string } }[] };
 type DataCallback = (data: Data) => void;
 interface fetchDataProps {
-	queries?: object[];
 	dataCallback?: DataCallback;
 }
 
@@ -29,7 +28,6 @@ const Home: FC = () => {
 	}, [isSignedIn, isLoaded]);
 
 	const fetchData = ({
-		queries,
 		dataCallback = data => {
 			const todos = data.records.map(({ id, fields: { title } }) => ({
 				id,
@@ -53,7 +51,6 @@ const Home: FC = () => {
 		requestWrapper({
 			dataCallback,
 			errorCallback,
-			queries,
 			userId
 		});
 	};
