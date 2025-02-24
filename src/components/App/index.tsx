@@ -20,11 +20,7 @@ const App: FC = () => {
 				path={urls.signIn}
 				element={
 					<AuthLayout>
-						<SignIn
-							routing='path'
-							path={urls.signIn}
-							signUpUrl={urls.signUp}
-						/>
+						<SignIn signUpUrl={urls.signUp} />
 					</AuthLayout>
 				}
 			/>
