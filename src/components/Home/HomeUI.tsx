@@ -1,21 +1,22 @@
-import TodoList from '../TodoList/TodoList';
-import AddTodoForm from '../AddTodoForm/AddTodoForm';
-import SortControl from '../SortControl/SortControl';
-import { State } from '../propTypes/TodoListReducer';
-import { OnAddTodo } from '../propTypes/OnAddTodo';
-import { OnRemoveTodo } from '../propTypes/OnRemoveTodo';
-import { OnSort } from '../propTypes/OnSort';
+import { FC } from 'react';
+import TodoList from '@/components/TodoList';
+import AddTodoForm from '@/components/AddTodoForm';
+import SortControl from '@/components/SortControl';
+import type { State } from '@/types/TodoListReducer';
+import type { OnAddTodo } from '@/types/OnAddTodo';
+import type { OnRemoveTodo } from '@/types/OnRemoveTodo';
+import type { OnSort } from '@/types/OnSort';
 
 interface HomeUIProps extends OnAddTodo, OnRemoveTodo, OnSort {
 	todoList: State;
 }
 
-export default function HomeUI({
+const HomeUI: FC<HomeUIProps> = ({
 	todoList,
 	onAddTodo,
 	onRemoveTodo,
 	onSort
-}: HomeUIProps) {
+}) => {
 	return (
 		<>
 			<h1>Todo List</h1>
@@ -41,4 +42,6 @@ export default function HomeUI({
 			)}
 		</>
 	);
-}
+};
+
+export default HomeUI;

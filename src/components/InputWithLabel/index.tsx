@@ -1,21 +1,22 @@
-import { useRef, useEffect } from 'react';
+import { FC, useRef, useEffect } from 'react';
 import style from './InputWithLabel.module.css';
-import { OnChange } from '../propTypes/OnChange';
+import type { onInputChange } from '@/types/OnEvent';
 
-interface InputWithLabelProps extends OnChange {
+interface InputWithLabelProps {
 	id: string;
 	name?: string;
 	value: string;
+	onChange: onInputChange;
 	children: React.ReactNode;
 }
 
-function InputWithLabel({
+const InputWithLabel: FC<InputWithLabelProps> = ({
 	id,
 	name = id,
 	value,
 	onChange,
 	children
-}: InputWithLabelProps) {
+}) => {
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
@@ -40,6 +41,6 @@ function InputWithLabel({
 			/>
 		</>
 	);
-}
+};
 
 export default InputWithLabel;

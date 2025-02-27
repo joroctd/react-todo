@@ -1,40 +1,33 @@
-import { useEffect, useReducer, useRef } from 'react';
+import { FC, useEffect, useReducer } from 'react';
+import { useAuth } from '@clerk/clerk-react';
 import { todoListReducer } from './todoListReducer';
-import requestWrapper from '../../util/requestWrapper';
+import requestWrapper from '@/utils/requestWrapper';
 import HomeUI from './HomeUI';
-import { Sort } from '../propTypes/Sort';
-import { Todo } from '../propTypes/Todo';
+import { Sort } from '@/types/Sort';
+import type { Todo } from '@/types/Todo';
 
-export default function Home() {
-	const isMounted = useRef(false);
+type Data = { records: { id: string; fields: { title: string } }[] };
+type DataCallback = (data: Data) => void;
+interface fetchDataProps {
+	dataCallback?: DataCallback;
+}
+
+const Home: FC = () => {
 	const [todoList, dispatchTodoList] = useReducer(todoListReducer, {
 		data: [],
 		sort: Sort.NONE,
 		isLoading: false,
 		isError: false
 	});
+	const { userId, isLoaded, isSignedIn } = useAuth();
 
 	useEffect(() => {
-		if (!isMounted.current) {
-			isMounted.current = true;
-			return;
+		if (isSignedIn && isLoaded) {
+			fetchData();
 		}
-
-		fetchData();
-	}, []);
-
-	type Data = { records: { id: string; fields: { title: string } }[] };
-	type DataCallback = (data: Data) => void;
-
-	interface fetchDataProps {
-		sort?: Sort;
-		queries?: object[];
-		dataCallback?: DataCallback;
-	}
+	}, [isSignedIn, isLoaded]);
 
 	const fetchData = ({
-		sort,
-		queries,
 		dataCallback = data => {
 			const todos = data.records.map(({ id, fields: { title } }) => ({
 				id,
@@ -42,7 +35,7 @@ export default function Home() {
 			}));
 			dispatchTodoList({
 				type: 'FETCH_SUCCESS',
-				payload: { todos, sort }
+				payload: { todos, sort: todoList.sort }
 			});
 		}
 	}: fetchDataProps = {}) => {
@@ -58,7 +51,7 @@ export default function Home() {
 		requestWrapper({
 			dataCallback,
 			errorCallback,
-			queries
+			userId
 		});
 	};
 
@@ -81,7 +74,8 @@ export default function Home() {
 			dataCallback,
 			body: {
 				title: newTodo
-			}
+			},
+			userId
 		});
 	};
 
@@ -93,58 +87,30 @@ export default function Home() {
 			const { id } = data;
 			dispatchTodoList({ type: 'REMOVE', payload: { id } });
 		};
-		requestWrapper({ options, dataCallback, id });
+		requestWrapper({ options, dataCallback, id, userId });
 	};
 
 	const sortData = (sort: Sort) => {
 		if (sort === todoList.sort) return;
 
-		const options: any = { sort };
-		let manualSort = null;
+		let manualSort: null | ((a: Required<Todo>, b: Required<Todo>) => number) =
+			null;
 		switch (sort) {
-			case Sort.NONE:
-				break;
-
-			case Sort.VIEW:
-				options.queries = [{ view: 'Grid%20view' }];
-				break;
-			case Sort.FIELD:
-				options.queries = [
-					{ 'sort[0][field]': 'title' },
-					{ 'sort[0][direction]': 'asc' }
-				];
-				break;
-
 			case Sort.ASCENDING:
-				manualSort = (objectA: Todo, objectB: Todo) => {
-					if (objectA.title < objectB.title) return -1;
-					if (objectA.title > objectB.title) return 1;
-					return 0;
-				};
+				manualSort = (a, b) => a.title.localeCompare(b.title);
 				break;
 			case Sort.DESCENDING:
-				manualSort = (objectA: Todo, objectB: Todo) => {
-					if (objectA.title > objectB.title) return -1;
-					if (objectA.title < objectB.title) return 1;
-					return 0;
-				};
+				manualSort = (a, b) => b.title.localeCompare(a.title);
 				break;
+			default:
+				return;
 		}
 
-		if (manualSort) {
-			options.dataCallback = (data: Data) => {
-				const todos = data.records.map(({ id, fields: { title } }) => ({
-					id,
-					title
-				}));
-				dispatchTodoList({
-					type: 'FETCH_SUCCESS',
-					payload: { todos: todos.sort(manualSort), sort }
-				});
-			};
-		}
-
-		fetchData(options);
+		const todos = [...todoList.data].sort(manualSort);
+		dispatchTodoList({
+			type: 'FETCH_SUCCESS',
+			payload: { todos, sort }
+		});
 	};
 
 	return (
@@ -155,4 +121,6 @@ export default function Home() {
 			onSort={sortData}
 		/>
 	);
-}
+};
+
+export default Home;

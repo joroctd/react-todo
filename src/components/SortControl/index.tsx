@@ -1,25 +1,23 @@
-import { OnSort } from '../propTypes/OnSort';
-import { Sort } from '../propTypes/Sort';
+import { FC } from 'react';
+import type { OnSort } from '@/types/OnSort';
+import { Sort } from '@/types/Sort';
 
 interface SortControlProps extends OnSort {
 	sort: Sort;
 }
 
-const SortControl = ({ sort, onSort }: SortControlProps) => {
-	const onChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+const SortControl: FC<SortControlProps> = ({ sort, onSort }) => {
+	const onChangeSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		onSort(e.target.value as Sort);
 	};
 
-	// could create an order option, with asc. / desc. there
-	//  and then remove the Airtable options to fully have sorting
-	//  be controlled on the client side
 	return (
 		<div>
 			<label htmlFor='sortControl'>Sort By: </label>
 			<select
 				id='sortControl'
 				value={sort}
-				onChange={onChange}>
+				onChange={onChangeSort}>
 				{Object.keys(Sort)
 					.filter(k => isNaN(Number(k)))
 					.map(sortKey => (
