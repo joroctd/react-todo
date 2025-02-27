@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import type { OnSort } from '../types/OnSort';
-import { Sort } from '../types/Sort';
+import type { OnSort } from '@/types/OnSort';
+import { Sort } from '@/types/Sort';
 
 interface SortControlProps extends OnSort {
 	sort: Sort;

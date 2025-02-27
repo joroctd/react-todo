@@ -2,10 +2,10 @@ import { FC } from 'react';
 import TodoList from '@/components/TodoList';
 import AddTodoForm from '@/components/AddTodoForm';
 import SortControl from '@/components/SortControl';
-import type { State } from '../types/TodoListReducer';
-import type { OnAddTodo } from '../types/OnAddTodo';
-import type { OnRemoveTodo } from '../types/OnRemoveTodo';
-import type { OnSort } from '../types/OnSort';
+import type { State } from '@/types/TodoListReducer';
+import type { OnAddTodo } from '@/types/OnAddTodo';
+import type { OnRemoveTodo } from '@/types/OnRemoveTodo';
+import type { OnSort } from '@/types/OnSort';
 
 interface HomeUIProps extends OnAddTodo, OnRemoveTodo, OnSort {
 	todoList: State;

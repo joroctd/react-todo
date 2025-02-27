@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import style from './TodoListItem.module.css';
-import type { Todo } from '../types/Todo';
-import type { OnRemoveTodo } from '../types/OnRemoveTodo';
+import type { Todo } from '@/types/Todo';
+import type { OnRemoveTodo } from '@/types/OnRemoveTodo';
 
 interface TodoListItemProps extends Todo, OnRemoveTodo {}
 

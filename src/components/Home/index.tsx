@@ -3,8 +3,8 @@ import { useAuth } from '@clerk/clerk-react';
 import { todoListReducer } from './todoListReducer';
 import requestWrapper from '@/utils/requestWrapper';
 import HomeUI from './HomeUI';
-import { Sort } from '../types/Sort';
-import type { Todo } from '../types/Todo';
+import { Sort } from '@/types/Sort';
+import type { Todo } from '@/types/Todo';
 
 type Data = { records: { id: string; fields: { title: string } }[] };
 type DataCallback = (data: Data) => void;

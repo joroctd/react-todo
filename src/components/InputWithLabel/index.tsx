@@ -1,6 +1,6 @@
 import { FC, useRef, useEffect } from 'react';
 import style from './InputWithLabel.module.css';
-import type { onInputChange } from '../types/OnEvent';
+import type { onInputChange } from '@/types/OnEvent';
 
 interface InputWithLabelProps {
 	id: string;
