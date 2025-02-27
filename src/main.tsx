@@ -1,6 +1,6 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import { ClerkProvider } from '@clerk/clerk-react';
 import './index.css';
 import App from '@/components/App';
@@ -11,12 +11,12 @@ if (!PUBLISHABLE_KEY) throw new Error('Missing Publishable Key');
 
 createRoot(document.getElementById('root') as HTMLElement).render(
 	<StrictMode>
-		<BrowserRouter>
+		<HashRouter>
 			<ClerkProvider
 				publishableKey={PUBLISHABLE_KEY}
 				afterSignOutUrl='/'>
 				<App />
 			</ClerkProvider>
-		</BrowserRouter>
+		</HashRouter>
 	</StrictMode>
 );
